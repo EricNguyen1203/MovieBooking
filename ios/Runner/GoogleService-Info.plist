@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyDKbKKncF4_2VLAA6sQeEP48UzWzGEhdlw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>24757881372</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.cinemaBookingV2</string>
+	<key>PROJECT_ID</key>
+	<string>cinemabookingv3</string>
+	<key>STORAGE_BUCKET</key>
+	<string>cinemabookingv3.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:24757881372:ios:1767f9879a6e8dff086dd9</string>
+</dict>
+</plist>
