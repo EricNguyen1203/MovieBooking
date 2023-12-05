@@ -14,7 +14,6 @@ class AllMovieScreen extends StatefulWidget {
 }
 
 class _AllMovieScreenState extends State<AllMovieScreen> {
-
   final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -58,7 +57,8 @@ class _AllMovieScreenState extends State<AllMovieScreen> {
                 ],
               ),
             ),
-            FirebaseGridView(searchController: _searchController),
+            Expanded(
+                child: FirebaseGridView(searchController: _searchController)),
           ],
         ));
   }
@@ -74,10 +74,9 @@ class FirebaseGridView extends StatefulWidget {
 }
 
 class _FirebaseGridViewState extends State<FirebaseGridView> {
+  List _allMovie = [];
 
-    List _allMovie = [];
-
-    List _resultMovie = [];
+  List _resultMovie = [];
   @override
   void initState() {
     widget.searchController.addListener(_onSearchChanged);
@@ -115,21 +114,16 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
     searchResultMovie();
   }
 
-  searchResultMovie(){
+  searchResultMovie() {
     var showResult = [];
-    if(widget.searchController != '')
-    {
-      for(var clientSnapshot in _allMovie)
-      {
+    if (widget.searchController != '') {
+      for (var clientSnapshot in _allMovie) {
         var name = clientSnapshot['name'].toString().toLowerCase();
-        if(name.contains(widget.searchController.text.toLowerCase()))
-        {
+        if (name.contains(widget.searchController.text.toLowerCase())) {
           showResult.add(clientSnapshot);
         }
       }
-    }
-    else
-    {
+    } else {
       showResult = List.from(_allMovie);
     }
 
@@ -190,8 +184,8 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
         scrollDirection: Axis.vertical,
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 3,
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
+          // crossAxisSpacing: 0,
+          // mainAxisSpacing: 0,
           childAspectRatio: 0.54,
         ),
         itemCount: _resultMovie.length,
@@ -232,7 +226,7 @@ class GridItem extends StatelessWidget {
           children: [
             Container(
               height: 180.0,
-              width: 130.0,
+              width: 120.0,
               child: GestureDetector(
                 onTap: () {
                   Navigator.push(
@@ -256,14 +250,14 @@ class GridItem extends StatelessWidget {
               ),
             ),
             Container(
-              width: 100.0,
+              width: 150.0,
               height: 50.0,
               child: ListTile(
                 title: Text(
                   movie.name,
                   softWrap: true,
                   style: TextStyle(
-                    fontSize: 10.0,
+                    fontSize: 14.0,
                     fontWeight: FontWeight.bold,
                     color: Colors.blueGrey,
                   ),
