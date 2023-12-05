@@ -24,6 +24,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
+  
+
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -130,15 +132,7 @@ class PosterListView extends StatelessWidget {
 
     List<Movie> movies = querySnapshot.docs.map((doc) {
       var data = doc.data() as Map<String, dynamic>;
-      return Movie(
-        imageUrl: data['ImageUrl'] ?? '',
-        name: data['name'] ?? '',
-        time: data['time'] ?? '',
-        category: [data['category1'] ?? '', data['category2'] ?? ''],
-        description: data['description'] ?? '',
-        rate: data['rate'] ?? '',
-        year: data['year'] ?? '',
-      );
+      return Movie.fromMap(data);
     }).toList();
 
     return movies;

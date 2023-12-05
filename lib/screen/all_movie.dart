@@ -1,4 +1,5 @@
 import 'package:cinema_booking_v2/common_widget/common_widget.dart';
+import 'package:cinema_booking_v2/entity/day.dart';
 import 'package:cinema_booking_v2/entity/movie.dart';
 import 'package:cinema_booking_v2/screen/home_screen.dart';
 import 'package:cinema_booking_v2/screen/movie_page.dart';
@@ -191,17 +192,8 @@ class _FirebaseGridViewState extends State<FirebaseGridView> {
         itemCount: _resultMovie.length,
         itemBuilder: (context, index) {
           var data = _resultMovie[index].data() as Map<String, dynamic>;
-          Movie temp = Movie(
-            imageUrl: data['ImageUrl'] ?? '',
-            name: data['name'] ?? '',
-            time: data['time'] ?? '',
-            category: [data['category1'] ?? '', data['category2'] ?? ''],
-            description: data['description'] ?? '',
-            rate: data['rate'] ?? '',
-            year: data['year'] ?? '',
-          );
           return GridItem(
-            movie: temp,
+            movie: Movie.fromMap(data),
           );
         },
       ),
