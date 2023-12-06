@@ -1,10 +1,5 @@
-import 'dart:ffi';
-
-import 'package:cinema_booking_v2/common_widget/common_widget.dart';
-import 'package:cinema_booking_v2/entity/cinema.dart';
 import 'package:cinema_booking_v2/entity/day.dart';
 import 'package:cinema_booking_v2/entity/movie.dart';
-import 'package:cinema_booking_v2/entity/showtime.dart';
 import 'package:cinema_booking_v2/entity/ticket.dart';
 import 'package:cinema_booking_v2/screen/home_screen.dart';
 import 'package:cinema_booking_v2/screen/seat_booking.dart';

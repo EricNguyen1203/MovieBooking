@@ -112,7 +112,7 @@ class GridItem extends StatelessWidget {
               width: 120.0,
               child: GestureDetector(
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
@@ -156,6 +156,71 @@ class GridItem extends StatelessWidget {
             ),
           ],
         ));
+  }
+}
+
+
+class ListItem extends StatelessWidget {
+  final Movie movie;
+
+  ListItem({
+    required this.movie,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: Column(
+        children: [
+          Container(
+            height: 150.0,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MoviePageScreen(movie: movie),
+                  ),
+                );
+              },
+              child: Container(
+                padding: EdgeInsets.only(left: 10.0, right: 10.0),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(
+                      Radius.circular(8.0)), // Adjust the corner radius
+                  child: Image.network(
+                    movie.imageUrl,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            width: 120.0,
+            height: 100.0,
+            child: ListTile(
+              title: Text(
+                movie.name,
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: 10.0,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blueGrey,
+                ),
+              ),
+              subtitle: Text(
+                movie.time,
+                softWrap: true,
+                style: TextStyle(
+                  fontSize: 10.0,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 

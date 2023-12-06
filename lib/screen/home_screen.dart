@@ -15,18 +15,6 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-    Future<List<Movie>> fetchData() async {
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('poster_items').get();
-
-    List<Movie> movies = querySnapshot.docs.map((doc) {
-      var data = doc.data() as Map<String, dynamic>;
-      return Movie.fromMap(data);
-    }).toList();
-
-    return movies;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,8 +60,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-
-// Cần cải tiến cái này
 class ImageSlider extends StatelessWidget {
   final List<String> imageUrls = [
     'https://firebasestorage.googleapis.com/v0/b/cinemabookingv4.appspot.com/o/ixLH2iM9at8BbuLr5wQWnCfwhJO.jpg?alt=media&token=62bdb25c-ee09-4b37-8b85-ae3bb058ce26',
@@ -160,70 +146,6 @@ class PosterListView extends StatelessWidget {
             },
           );
         },
-      ),
-    );
-  }
-}
-
-class ListItem extends StatelessWidget {
-  final Movie movie;
-
-  ListItem({
-    required this.movie,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        children: [
-          Container(
-            height: 150.0,
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MoviePageScreen(movie: movie),
-                  ),
-                );
-              },
-              child: Container(
-                padding: EdgeInsets.only(left: 10.0, right: 10.0),
-                child: ClipRRect(
-                  borderRadius: const BorderRadius.all(
-                      Radius.circular(8.0)), // Adjust the corner radius
-                  child: Image.network(
-                    movie.imageUrl,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            width: 120.0,
-            height: 100.0,
-            child: ListTile(
-              title: Text(
-                movie.name,
-                softWrap: true,
-                style: TextStyle(
-                  fontSize: 10.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueGrey,
-                ),
-              ),
-              subtitle: Text(
-                movie.time,
-                softWrap: true,
-                style: TextStyle(
-                  fontSize: 10.0,
-                ),
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

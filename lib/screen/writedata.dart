@@ -1,3 +1,5 @@
+// Dùng để cập nhật dữ liệu lên Firestore Firebase
+
 import 'package:cinema_booking_v2/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
