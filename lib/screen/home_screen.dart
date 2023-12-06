@@ -9,31 +9,26 @@ import 'package:flutter/material.dart';
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
 
-  
+    Future<List<Movie>> fetchData() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('poster_items').get();
+
+    List<Movie> movies = querySnapshot.docs.map((doc) {
+      var data = doc.data() as Map<String, dynamic>;
+      return Movie.fromMap(data);
+    }).toList();
+
+    return movies;
+  }
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: const MyAppBar(title: 'Now Showing ..'),
       body: Column(children: [
@@ -84,7 +79,6 @@ class ImageSlider extends StatelessWidget {
     'https://firebasestorage.googleapis.com/v0/b/cinemabookingv4.appspot.com/o/ixLH2iM9at8BbuLr5wQWnCfwhJO.jpg?alt=media&token=62bdb25c-ee09-4b37-8b85-ae3bb058ce26',
     'https://firebasestorage.googleapis.com/v0/b/cinemabookingv4.appspot.com/o/images2.jpg?alt=media&token=484d1675-b688-4649-84ae-06d6b84da243',
     'https://firebasestorage.googleapis.com/v0/b/cinemabookingv4.appspot.com/o/8n8bF1hPICIYC4byBj0pqNn9vXs.jpg?alt=media&token=44a66854-e830-41b1-ae9a-983bff1fd481'
-    // Add more image URLs as needed
   ];
 
 

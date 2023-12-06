@@ -15,8 +15,14 @@ class _SuccessfullyBookingScreenState extends State<SuccessfullyBookingScreen> {
   appBar: AppBar(
     title: Text('Booking Successfully!!'),
   ),
-  body: Center(
-    child: Text('You have successfully booked your tickets, have fun watching the movie!!'),
+  body: Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Center(
+      child: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Text('You have successfully booked your tickets, have fun watching the movie!!',)),
+    ),
   ),
   );
   }

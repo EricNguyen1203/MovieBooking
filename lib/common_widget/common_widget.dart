@@ -1,3 +1,5 @@
+import 'package:cinema_booking_v2/entity/movie.dart';
+import 'package:cinema_booking_v2/screen/movie_page.dart';
 import 'package:flutter/material.dart';
 
 class MyAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -90,4 +92,72 @@ Container singInSignUpButton(BuildContext context, bool isLogin, Function onTap)
 
   );
 }
+
+class GridItem extends StatelessWidget {
+  final Movie movie;
+
+  GridItem({
+    super.key,
+    required this.movie,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        height: 100.0,
+        child: Column(
+          children: [
+            Container(
+              height: 180.0,
+              width: 120.0,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MoviePageScreen(movie: movie)),
+                  );
+                },
+                child: Container(
+                  // padding: const EdgeInsets.all(8.0),
+                  child: ClipRRect(
+                    borderRadius: const BorderRadius.all(
+                        Radius.circular(8.0)), // Điều chỉnh độ cong để bo góc
+                    child: Image.network(
+                      movie.imageUrl,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              width: 150.0,
+              height: 50.0,
+              child: ListTile(
+                title: Text(
+                  movie.name,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: 14.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.blueGrey,
+                  ),
+                ),
+                subtitle: Text(
+                  movie.time,
+                  softWrap: true,
+                  style: TextStyle(
+                    fontSize: 10.0,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ));
+  }
+}
+
+
 

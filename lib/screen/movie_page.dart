@@ -6,6 +6,7 @@ import 'package:cinema_booking_v2/entity/day.dart';
 import 'package:cinema_booking_v2/entity/movie.dart';
 import 'package:cinema_booking_v2/entity/showtime.dart';
 import 'package:cinema_booking_v2/entity/ticket.dart';
+import 'package:cinema_booking_v2/screen/home_screen.dart';
 import 'package:cinema_booking_v2/screen/seat_booking.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,8 @@ class _MoviePageScreenState extends State<MoviePageScreen> {
     containerColors[0] = Colors.blue;
     textColors[0] = Colors.black;
     currentDay = widget.movie.days[0];
-    ticket = Ticket(thu: currentDay.thu, time: '', day: currentDay.day, name_of_cinema: '');
+    ticket = Ticket(
+        thu: currentDay.thu, time: '', day: currentDay.day, name_of_cinema: '');
     newDay = false;
     super.initState();
   }
@@ -38,7 +40,6 @@ class _MoviePageScreenState extends State<MoviePageScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: MyAppBar(title: 'Browse'),
         body: Column(
           children: [
             Stack(
@@ -191,10 +192,12 @@ class _MoviePageScreenState extends State<MoviePageScreen> {
                                 Expanded(
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 8.0),
-                                    child: Text(
-                                      widget.movie.description,
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(fontSize: 16.0),
+                                    child: SingleChildScrollView(
+                                      child: Text(
+                                        widget.movie.description,
+                                        textAlign: TextAlign.left,
+                                        style: TextStyle(fontSize: 16.0),
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -204,6 +207,21 @@ class _MoviePageScreenState extends State<MoviePageScreen> {
                         ],
                       ),
                     ),
+                  ),
+                ),
+                GestureDetector(
+                  onTap: () {
+                    // Navigate back to the previous screen
+                    Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MyHomePage()),
+              );
+                  },
+                  child: Container(
+                    margin: EdgeInsets.only(top: 40.0),
+                    padding: EdgeInsets.all(10.0),
+                    child: Icon(Icons.arrow_back, color: Colors.white,),
                   ),
                 ),
               ],
@@ -288,18 +306,21 @@ class _MoviePageScreenState extends State<MoviePageScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            if (ticket.isValid()){
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => SeatBookingScreen(movie: widget.movie, ticket: ticket,)),
-            );
-            }else{
+            if (ticket.isValid()) {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => SeatBookingScreen(
+                          movie: widget.movie,
+                          ticket: ticket,
+                        )),
+              );
+            } else {
               ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Hãy cập nhật đủ thông tin'),
-                  ),
-                );
+                SnackBar(
+                  content: Text('Hãy cập nhật đủ thông tin'),
+                ),
+              );
             }
           },
           child: Icon(Icons.arrow_forward),
@@ -332,124 +353,144 @@ class CinemaListWidget extends StatefulWidget {
   late bool newDay;
   final Ticket ticket;
 
-  CinemaListWidget({required this.day, required this.ticket, required this.newDay});
+  CinemaListWidget(
+      {required this.day, required this.ticket, required this.newDay});
 
   @override
   _CinemaListWidgetState createState() => _CinemaListWidgetState();
 }
 
 class _CinemaListWidgetState extends State<CinemaListWidget> {
-  late List<List<Color>> containerColors  = List.generate(
-      100,
-      (index) => List<Color>.filled(100, Colors.grey),
-    );
+  late List<List<Color>> containerColors = List.generate(
+    100,
+    (index) => List<Color>.filled(100, Colors.grey),
+  );
   late List<List<Color>> textColors = List.generate(
-      100,
-      (index) => List<Color>.filled(100, Colors.grey),
-    );
+    100,
+    (index) => List<Color>.filled(100, Colors.grey),
+  );
   @override
   Widget build(BuildContext context) {
-    if(widget.newDay == true){
-    containerColors = List.generate(
-      100,
-      (index) => List<Color>.filled(100, Colors.grey),
-    );
+    if (widget.newDay == true) {
+      containerColors = List.generate(
+        100,
+        (index) => List<Color>.filled(100, Colors.grey),
+      );
 
-    textColors = List.generate(
-      100,
-      (index) => List<Color>.filled(100, Colors.grey),
-    );
-    widget.ticket.name_of_cinema = '';
-    widget.ticket.time = '';
+      textColors = List.generate(
+        100,
+        (index) => List<Color>.filled(100, Colors.grey),
+      );
+      widget.ticket.name_of_cinema = '';
+      widget.ticket.time = '';
     }
-    print(widget.ticket.day);
-    print(widget.ticket.thu);
-    print(widget.ticket.name_of_cinema);
-    print(widget.ticket.time);
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListView.builder(
-        itemCount: widget.day.cinemas.length,
-        itemBuilder: (BuildContext context, int index1) {
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: EdgeInsets.only(left: 8.0),
-                child: Text(
-                  widget.day.cinemas[index1].name,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
+    if (!widget.day.cinemas.isEmpty) {
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: ListView.builder(
+          itemCount: widget.day.cinemas.length,
+          itemBuilder: (BuildContext context, int index1) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  padding: EdgeInsets.only(left: 8.0),
+                  child: Text(
+                    widget.day.cinemas[index1].name,
+                    textAlign: TextAlign.left,
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ), // Thành phần trên cùng là Text
+                // Thành phần dưới cùng là ListView theo chiều ngang
+                Container(
+                  height: 55.0, // Điều chỉnh chiều cao của Container
+                  child: ListView.builder(
+                    scrollDirection:
+                        Axis.horizontal, // Đặt hướng cuộn là chiều ngang
+                    itemCount: widget.day.cinemas[index1].showtimes.length,
+                    itemBuilder: (BuildContext context, int index2) {
+                      // containerColors = List.generate(
+                      //     widget.day.cinemas[index1].showtimes.length,
+                      //     (index) => Colors.grey);
+                      // textColors = List.generate(
+                      //     widget.day.cinemas[index1].showtimes.length,
+                      //     (index) => Colors.grey);
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            if (widget
+                                .day.cinemas[index1].showtimes[index2].status) {
+                              widget.ticket.name_of_cinema =
+                                  widget.day.cinemas[index1].name;
+                              widget.ticket.time = widget
+                                  .day.cinemas[index1].showtimes[index2].time;
+                              widget.newDay = false;
+                              containerColors = List.generate(
+                                100,
+                                (index) => List<Color>.filled(100, Colors.grey),
+                              );
+                              ;
+                              textColors = List.generate(
+                                100,
+                                (index) => List<Color>.filled(100, Colors.grey),
+                              );
+                              ;
+                              containerColors[index1][index2] = Colors.blue;
+                              textColors[index1][index2] = Colors.black;
+                            }
+                          });
+                        },
+                        child: Container(
+                          margin: EdgeInsets.all(8.0),
+                          padding: EdgeInsets.all(8.0),
+                          decoration: BoxDecoration(
+                            color: widget.day.cinemas[index1].showtimes[index2]
+                                    .status
+                                ? Colors.white
+                                : Colors.grey[800],
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10.0)),
+                            border: Border.all(
+                              color: containerColors[index1]
+                                  [index2], // Màu đen cho border
+                              width: 2.0, // Độ rộng của border
+                            ),
+                          ),
+                          child: Text(
+                            widget.day.cinemas[index1].showtimes[index2].time,
+                            style: TextStyle(
+                              color: textColors[index1][index2],
+                            ),
+                          ),
+                        ),
+                      );
+                    },
                   ),
                 ),
-              ), // Thành phần trên cùng là Text
-              // Thành phần dưới cùng là ListView theo chiều ngang
-              Container(
-                height: 55.0, // Điều chỉnh chiều cao của Container
-                child: ListView.builder(
-                  scrollDirection:
-                      Axis.horizontal, // Đặt hướng cuộn là chiều ngang
-                  itemCount: widget.day.cinemas[index1].showtimes.length,
-                  itemBuilder: (BuildContext context, int index2) {
-                    // containerColors = List.generate(
-                    //     widget.day.cinemas[index1].showtimes.length,
-                    //     (index) => Colors.grey);
-                    // textColors = List.generate(
-                    //     widget.day.cinemas[index1].showtimes.length,
-                    //     (index) => Colors.grey);
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          if(widget.day.cinemas[index1].showtimes[index2].status){
-                          widget.ticket.name_of_cinema =
-                              widget.day.cinemas[index1].name;
-                          widget.ticket.time =
-                              widget.day.cinemas[index1].showtimes[index2].time;
-                            widget.newDay = false;
-                          containerColors = List.generate(
-                            100,
-                            (index) => List<Color>.filled(100, Colors.grey),
-                          );
-                          ;
-                          textColors = List.generate(
-                            100,
-                            (index) => List<Color>.filled(100, Colors.grey),
-                          );
-                          ;
-                          containerColors[index1][index2] = Colors.blue;
-                          textColors[index1][index2] = Colors.black;
-                          }
-                        });
-                      },
-                      child: Container(
-                        margin: EdgeInsets.all(8.0),
-                        padding: EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                          color: widget.day.cinemas[index1].showtimes[index2].status ? Colors.white : Colors.grey[800],
-                          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-                          border: Border.all(
-                            color: containerColors[index1]
-                                [index2], // Màu đen cho border
-                            width: 2.0, // Độ rộng của border
-                          ),
-                        ),
-                        child: Text(
-                          widget.day.cinemas[index1].showtimes[index2].time,
-                          style: TextStyle(
-                            color: textColors[index1][index2],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
+              ],
+            );
+          },
+        ),
+      );
+    } else {
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(
+          child: Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height,
+              child: Text(
+                'Out of showtime in the moment!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 32,
                 ),
-              ),
-            ],
-          );
-        },
-      ),
-    );
+              )),
+        ),
+      );
+    }
   }
 }
