@@ -23,9 +23,6 @@ class _SeatBookingScreenState extends State<SeatBookingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text('SeatBooking'),
-        ),
         body: Column(
           children: [
             Stack(

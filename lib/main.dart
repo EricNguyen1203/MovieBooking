@@ -1,5 +1,3 @@
-import 'package:cinema_booking_v2/screen/all_movie.dart';
-import 'package:cinema_booking_v2/screen/home_screen.dart';
 import 'package:cinema_booking_v2/screen/sign_in.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -40,7 +38,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
+      home: SignInScreen(),
     );
   }
 }
